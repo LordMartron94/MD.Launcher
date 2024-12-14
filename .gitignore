@@ -13,6 +13,8 @@
 # Environments
 .env
 
+config.json
+
 # ======= PYTHON =======
 
 # Byte-compiled / optimized / DLL files
