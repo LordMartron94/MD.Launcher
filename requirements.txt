@@ -1,0 +1,1 @@
+-r md_launcher/components/md_common_python/requirements.txt
