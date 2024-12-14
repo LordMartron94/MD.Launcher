@@ -13,7 +13,9 @@
 # Environments
 .env
 
+# PROJECT SPECIFIC
 config.json
+router/
 
 # ======= PYTHON =======
 
