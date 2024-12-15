@@ -14,7 +14,7 @@ class LaunchUtil:
 	"""
 
 	def __init__(self, configuration: ConfigurationModel, logger: HoornLogger, separator: str = "Launcher"):
-		self._configuration = configuration
+		self._configuration: ConfigurationModel = configuration
 		self._logger = logger
 		self._separator = separator
 		self._command_helper = CommandHelper(self._logger, self._separator + ".Command")
@@ -31,20 +31,23 @@ class LaunchUtil:
 
 	def _launch_components(self):
 		for component in self._configuration.components:
+			file_path = self._configuration.project_root.joinpath(component.file_path)
+			file_path = Path(str(file_path).replace("${sanitized_project_name}", self._configuration.sanitized_project_name))
 			arguments = component.args
 			arguments = [arg.replace("${project_name}", f"{self._configuration.project_name}") for arg in arguments]
 
 			if component.type == "Exe":
-				self._command_helper.open_application(exe=component.file_path, args=arguments)
+				self._command_helper.open_application(exe=file_path, args=arguments)
 			elif component.type == "Python":
-				if self._configuration.python_venv_path is None:
+				venv_path: Path = self._configuration.python_venv_path
+
+				if venv_path is None:
 					self._logger.error(f"Cannot launch Python component {component.file_path} because Python Virtual Environment path is not set.", separator=self._separator)
 					continue
-				venv_exe = self._configuration.python_venv_path.joinpath("Scripts", "python.exe")
-				if not venv_exe.exists():
+				if not venv_path.exists():
 					self._logger.error(f"Cannot launch Python component {component.file_path} because Python Virtual Environment executable does not exist at {venv_exe}.", separator=self._separator)
 					continue
 
-				self._command_helper.open_application(exe=venv_exe, args=[f"{component.file_path}"] + arguments, new_window=not self._configuration.components_launch_in_background)
+				self._command_helper.open_application(exe=venv_path, args=[f"{file_path}"] + arguments, new_window=not self._configuration.components_launch_in_background)
 
 			time.sleep(self._sequence_sleep)

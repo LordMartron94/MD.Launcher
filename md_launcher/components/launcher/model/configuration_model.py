@@ -9,6 +9,7 @@ from md_launcher.components.launcher.model.component_model import ComponentModel
 class ConfigurationModel(pydantic.BaseModel):
 	project_root: Path
 	project_name: str
+	sanitized_project_name: str
 	router_binary: Path
 	components: List[ComponentModel]
 	python_venv_path: Optional[Path]
