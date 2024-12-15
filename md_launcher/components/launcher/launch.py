@@ -8,7 +8,7 @@ from md_launcher.components.launcher.config_validation import ConfigValidation
 from md_launcher.components.launcher.launch_util import LaunchUtil
 from md_launcher.components.launcher.model.raw_configuration_model import RawConfigurationModel
 from md_launcher.components.md_common_python.py_common.logging import HoornLogger, DefaultHoornLogOutput, \
-	FileHoornLogOutput
+	FileHoornLogOutput, LogType
 
 
 def get_log_dir(application_name: str):
@@ -62,7 +62,7 @@ if __name__ == "__main__":
 
 	log_dir = Path(get_log_dir(validated_config.project_name))
 	root_separator = validated_config.project_name.upper()
-	real_logger = HoornLogger(separator_root=root_separator, outputs=[DefaultHoornLogOutput(), FileHoornLogOutput(log_dir, max_logs_to_keep=5)])
+	real_logger = HoornLogger(separator_root=root_separator, outputs=[DefaultHoornLogOutput(), FileHoornLogOutput(log_dir, max_logs_to_keep=5)], min_level=LogType.DEBUG if validated_config.debug_mode else LogType.INFO)
 
 	real_logger.info("Successfully started the launcher.", separator="Launcher")
 

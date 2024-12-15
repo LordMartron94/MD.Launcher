@@ -14,5 +14,12 @@ class ConfigValidation:
 			self._logger.error(f"Router binary '{router_binary}' does not exist.")
 			exit(1)
 
-		return ConfigurationModel(**self._configuration.model_dump(), router_binary=router_binary, component_launchers=[])
+		config_model = ConfigurationModel(**self._configuration.model_dump(), router_binary=router_binary)
+
+		if config_model.python_venv_path is not None:
+			if not config_model.python_venv_path.exists():
+				self._logger.error(f"Python Virtual Environment path '{config_model.python_venv_path}' does not exist.")
+				exit(1)
+
+		return config_model
 
