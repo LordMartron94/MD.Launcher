@@ -62,7 +62,7 @@ if __name__ == "__main__":
 	validated_config = ConfigValidation(config_model, high_level_logger).validate_configuration()
 
 	log_dir = Path(get_log_dir(validated_config.project_name))
-	root_separator = validated_config.project_name.upper()
+	root_separator = validated_config.project_name
 	real_logger = HoornLogger(separator_root=root_separator, outputs=[DefaultHoornLogOutput(), FileHoornLogOutput(log_dir, max_logs_to_keep=5)], min_level=LogType.DEBUG if validated_config.debug_mode else LogType.INFO)
 
 	real_logger.info("Successfully started the launcher.", separator="Launcher")
