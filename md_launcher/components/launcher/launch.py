@@ -1,6 +1,7 @@
 import json
 import os
 import sys
+
 from json import JSONDecodeError
 from pathlib import Path
 

@@ -12,6 +12,7 @@
 
 # Environments
 .env
+venv
 
 # PROJECT SPECIFIC
 config.json
