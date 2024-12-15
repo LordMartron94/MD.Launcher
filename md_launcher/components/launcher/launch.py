@@ -24,7 +24,7 @@ def get_log_dir(application_name: str):
 		raise e
 
 	dir = os.path.join(user_config_dir, "AppData", "Local")
-	log_dir = os.path.join(dir, application_name, "logs")
+	log_dir = os.path.join(dir, application_name, "logs", "Launcher")
 	return log_dir
 
 if __name__ == "__main__":
@@ -68,4 +68,6 @@ if __name__ == "__main__":
 
 	launch_util: LaunchUtil = LaunchUtil(validated_config, real_logger)
 	launch_util.launch()
+
+	real_logger.info("Successfully launched application.", separator="Launcher")
 
