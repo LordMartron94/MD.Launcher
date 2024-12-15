@@ -5,6 +5,7 @@ from json import JSONDecodeError
 from pathlib import Path
 
 from md_launcher.components.launcher.config_validation import ConfigValidation
+from md_launcher.components.launcher.launch_util import LaunchUtil
 from md_launcher.components.launcher.model.raw_configuration_model import RawConfigurationModel
 from md_launcher.components.md_common_python.py_common.logging import HoornLogger, DefaultHoornLogOutput, \
 	FileHoornLogOutput
@@ -64,4 +65,7 @@ if __name__ == "__main__":
 	real_logger = HoornLogger(separator_root=root_separator, outputs=[DefaultHoornLogOutput(), FileHoornLogOutput(log_dir, max_logs_to_keep=5)])
 
 	real_logger.info("Successfully started the launcher.", separator="Launcher")
+
+	launch_util: LaunchUtil = LaunchUtil(validated_config, real_logger)
+	launch_util.launch()
 
