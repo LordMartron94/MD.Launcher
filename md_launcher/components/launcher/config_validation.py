@@ -25,7 +25,10 @@ class ConfigValidation:
 			self._logger.error(f"Router binary '{router_binary}' does not exist.")
 			exit(1)
 
-		venv_exe = root.joinpath("venv", "Scripts", "python.exe")
+		if self._configuration.venv_override is None:
+			venv_exe = root.joinpath("venv", "Scripts", "python.exe")
+		else:
+			venv_exe = Path(self._configuration.venv_override).joinpath("Scripts", "python.exe")
 		config_model = ConfigurationModel(**self._configuration.model_dump(), router_binary=router_binary, python_venv_path=venv_exe, project_root=root)
 
 		if config_model.python_venv_path is not None:

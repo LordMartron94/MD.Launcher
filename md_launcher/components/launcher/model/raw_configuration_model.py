@@ -13,6 +13,7 @@ class RawConfigurationModel(pydantic.BaseModel):
 	components: List[ComponentModel] = Field(default_factory=list)
 	debug_mode: bool = Field(default=False)
 	components_launch_in_background: bool = Field(default=False)
+	venv_override: str = Field(default=None)
 
 	@pydantic.field_validator("project_name", mode="before")
 	@classmethod
